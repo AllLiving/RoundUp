@@ -1,0 +1,21 @@
+export HADOOP_HOME=/usr/local/hadoop
+export JAVA_HOME=/usr/local/jvm/jdk1.8.0_60
+export HADOOP_CONF_DIR=${HADOOP_HOME}/etc/hadoop
+export SPARK_MASTER_IP=master
+export SPARK_WORKER_MEMORY=1000M
+export SPARK_EXECUTOR_MEMORY=1000M
+
+spark executor extra Java Options enabled
+eventLog true dir hdfs Print GCDetails Dkey
+value Dnumber history server for Spark
+address Directory speculation
+spark.executor.extraJavaOptions -XX:+PrintGCDetails -Dkey=value -Dnumbers="one two three" spark.eventLog.enabled true spark.eventLog.dir hdfs://master:9000/historyserverforSpark spark.yarn.historyServer.address master:18080 spark.history.fs.logDirectory hdfs://master:9000/historyserverforSpark spark.speculation
+true
+
+spark.executor.extraJavaOptions -XX:+PrintGCDetails -Dkey=value -Dnumber="one two three"
+spark.eventLog.enabled	true
+spark.eventLog.dir hdfs://master:9000/historyserverforSpark
+spark.yarn.historyServer.address	master:18080
+spark.history.fs.logDirectory	hdfs://master:9000/historyserverforSpark
+spark.speculation	true
+

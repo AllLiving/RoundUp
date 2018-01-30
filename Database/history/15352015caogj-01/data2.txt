@@ -1,0 +1,13 @@
+create table orders
+(ordna char(20) unique,
+month INT,
+cid int,
+aid int,
+pid int,
+qty char(20),
+dollars int,
+primary key(ordna),
+foreign key(cid) references customers on delete cascade,
+foreign key(aid) references agents on delete cascade,
+foreign key(pid) references products on delete cascade)
+

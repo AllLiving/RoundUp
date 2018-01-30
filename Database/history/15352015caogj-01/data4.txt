@@ -1,0 +1,4 @@
+create index xsno on customers(cid)
+create index xsno on agents(aid)
+create index xsno on products(pid)
+create index xsno on orders(ordna)

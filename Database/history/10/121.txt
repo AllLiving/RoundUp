@@ -1,0 +1,73 @@
+create table char drop delete constraint insert into select from
+
+create table worker(
+	number char(5),
+	name char(8) constraint U1 unique,
+	sex char(1),
+	sage int constraint U2 check (sage <= 28),
+	department char(20),
+	constraint pk_worker primary key (number)
+)
+
+insert into worker(number, name, sex, sage, department)
+values ('0001', 'Liyong', 'm', 14, 'tech');
+
+select *
+from worker
+
+go
+create rule rule_sex
+as @value in ('F', 'M')
+go 
+exec sp_bindrule rule_sex,'worker.[sex]';
+
+insert into worker
+values ('00003', 'WangHao', '1', '25', 'sience')
+
+exec sp_unbindrule 'worker.[sex]'
+exec sp_unbindrule 'worker.[sex]'
+
+go
+create rule rule_age
+as @value>=0
+go
+exec sp_bindrule rule_age, 'worker.[sex]'
+
+
+insert into worker
+values('00004', 'ZONE', 'm', '-1', 'magic')
+
+insert into worker
+values('00005', 'Flash', 'm', '23', 'trans')
+
+go
+create rule U4
+as @value < 0
+go
+exec sp_bindrule U4, 'worker.[sage]'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

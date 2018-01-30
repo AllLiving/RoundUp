@@ -1,0 +1,48 @@
+
+--1
+exec sp_addlogin 'ErWang', '123456', 'school', 'English'
+go
+use school
+go
+exec sp_grantdbaccess 'ErWang'
+
+use school
+go
+create view grade2000 as
+	select *
+	from students
+	where grade = '2000'
+	
+--2
+use school
+go
+grant select 
+on grade2000
+to ErWang
+
+--3
+use school
+go
+grant update
+on dbo.[grade2000]([sname])
+to ErWang
+
+--4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

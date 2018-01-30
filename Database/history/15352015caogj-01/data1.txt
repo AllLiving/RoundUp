@@ -1,0 +1,18 @@
+create table customers
+(cid int unique,
+cname char(20),
+city char(20),
+discnt int,
+primary key(cid))
+
+create table agents
+(aid int unique,
+aname char(20),
+city char(20),
+percent float,
+primary key(aid))
+
+create table products
+(pid int unique,
+pname char(20),
+primary key (pid))

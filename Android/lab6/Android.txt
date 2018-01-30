@@ -1,0 +1,4 @@
+Handler 的指标要大于 AsyncTask
+点击RXJAVA
+一段时间后自己跳出complete
+以上变量针对的指标大小关系不变

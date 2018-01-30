@@ -1,0 +1,11 @@
+﻿	使用Xshell连接虚拟机失败
+
+需要修改虚拟机的子网设置，将子网设置为当前IP地址XXX.XXX.XXX.0，
+即可
+
+	From word to file
+
+create a new directory /InverseIndex
+and insert a file named "InverseIndex.java"
+fix environment-variable
+

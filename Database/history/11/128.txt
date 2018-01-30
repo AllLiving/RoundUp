@@ -1,0 +1,290 @@
+use school
+
+set xact_abort on
+begin transaction tmp
+
+go
+create trigger T1 on worker
+for insert, update 
+as
+if(select sage from inserted)<1)
+	begin
+		print 'Sage must be an integer more than zero! Transaction fail!'
+		Rollback transaction
+	End
+
+commit transaction tmp
+
+
+set xact_abort on
+begin transaction tmp
+
+go 
+create trigger T2 on worker
+	for delete
+	as
+	if(select number from deleteed) = '00001'
+		begin
+			print'CEO! delete fail!'
+			Rollback transaction
+		End
+
+commit transaction tmp
+
+
+begin transaction tmp
+
+go
+create trigger T3 on worker
+for update
+as
+	if update(number)
+		begin
+			print 'Member number cannot be update!'
+			Rollback transaction
+		End
+
+commit transaction tmp
+
+begin transaction tmp
+
+update worker
+set number='00007'
+where sex='F'
+
+commit transaction tmp
+
+
+begin transaction tmp
+
+create table scholarship
+	(sid char(10) references students(sid),
+	sname char(10), 	
+	money int,
+	primary key (sid)
+	)
+commit transaction tmp
+
+begin transaction tmp
+
+create view StudentScholarship
+as 
+	select st.sid, st.name, ss.money
+	from students as st, scholarship ss
+	where st.sid = ss.sid
+	
+commit transaction tmp
+消息 111，级别 15，状态 1，第 8 行
+'CREATE VIEW' 必须是查询批次中的第一个语句。
+
+insert into StudentScholarship
+values('1000', 'Tom', 1000)
+
+
+create trigger tri_ins_sc on StudentScholarship
+instead of insert
+as
+begin
+	set nocount on
+	if(
+		not exists
+		(select s.sid
+		from students s, inserted i
+		where s.sid = i.sid)
+	)
+	begin
+		insert into students
+			select sid, sname, null, null
+			from inserted
+		insert into scholarship
+			select sid, sname, money
+			from inserted
+	End
+	else print 'DATA EXISTS'
+End
+
+insert into StudentScholarship
+values('1000', 'Tom', 1000)
+
+--1
+set xact_abort on
+begin transaction tmp
+
+go 
+create trigger T4 on worker
+for insert
+as
+	if(
+		(select sage
+		from inserted)<=
+		all(
+			select sage
+			from inserted)
+	)
+	begin
+		print 'It is too young'
+		Rollback transaction
+	End
+commit transaction tmp
+
+set xact_abort on
+begin transaction tmp
+
+insert into worker
+values('0002', 'Wanggang', 'm', 13, 'magic')
+
+select *
+from worker
+
+commit transaction tmp
+It is too young
+消息 3902，级别 16，状态 1，过程 T4，第 15 行
+COMMIT TRANSACTION 请求没有对应的 BEGIN TRANSACTION。
+语句已终止。
+
+--2
+set xact_abort on
+begin transaction tmp
+
+go
+create trigger T5 on worker
+for update
+as
+	if(
+		(select sage
+		from inserted)
+		<
+		(select sage
+		from deleted)
+	)
+	begin
+		print 'Why much younger!?'
+		Rollback transaction
+	End
+commit transaction tmp
+
+set xact_abort on
+begin transaction tmp
+
+update worker
+set sage = 7
+where number = '0001'
+
+select *
+from worker
+
+commit transaction tmp
+Why much younger!?
+消息 3902，级别 16，状态 1，过程 T5，第 15 行
+COMMIT TRANSACTION 请求没有对应的 BEGIN TRANSACTION。
+语句已终止。
+
+
+--5
+set xact_abort on
+begin transaction tmp
+
+go
+create trigger T6 on worker
+for update 
+as
+	if(select number
+	from inserted) = '0001'
+	begin
+		print 'Cannot change it, Permission denyed.'
+		Rollback transaction
+	End
+commit transaction tmp
+
+set xact_abort on
+begin transaction tmp
+
+update worker
+set sage = '2'
+where number = '0001'
+
+commit transaction tmp
+Cannot change it, Permission denyed.
+消息 3902，级别 16，状态 1，过程 T6，第 10 行
+COMMIT TRANSACTION 请求没有对应的 BEGIN TRANSACTION。
+语句已终止。
+
+
+--6
+create view StuStucard
+as
+select st.sid, st.sname, st.email, st.grade, sc.card_id, sc.stu_id, sc.remained_money
+from students st,  stu_card sc
+where sc.stu_id = st.sid
+
+
+create trigger trg_ins_ssc on StuStucard
+instead of insert
+as
+begin
+	set nocount on
+	if(not exists
+		(select students.sid
+		from students, inserted
+		where students.sid = inserted.stu_id)
+	)
+	begin
+		insert into students
+			select sid, sname, email, grade
+			from inserted
+		insert into stu_card
+			select card_id, stu_id, remained_money
+			from inserted
+	End
+	else
+		print 'Reputated tuple.Insert fail'
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

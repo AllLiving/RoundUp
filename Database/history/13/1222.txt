@@ -1,0 +1,113 @@
+--1
+begin tran 
+	update students
+	set grade = '68'
+	where sid = '1000'
+	
+	waitfor delay '00:00:10'
+	
+	select *
+	from students
+	where sid = '1000'
+rollback tran
+	select *
+	from students
+	where sid = '1000'
+
+--1.2
+set transaction isolation level read uncommitted
+	select *
+	from students
+	where sid = '1000'
+	
+	if @@rowcount <> 0
+		begin
+			waitfor delay '00:00:10'
+			select *
+			from students
+			where sid = '1000'
+		end
+		
+--2.1 = 1.1
+
+--2
+set transaction isolation level read committed
+	select *
+	from students
+	where sid = '1000'
+	
+	if @@rowcount <> 0
+		begin
+			waitfor delay '00:00:10'
+			select *
+			from students
+			where sid = '1000'
+		end
+	
+--3.1
+set transaction isolation level read repeatable read
+begin tran
+	select *
+	from students
+	where sid = '1000'
+	
+	if @@rowcount <> 0
+		begin
+			waitfor delay '00:00:10'
+			select *
+			from students
+			where sid = '1000'
+		end
+commit tran
+--3.2 = 1.1/delete/
+set transaction isolation level read repeatable read
+update students
+set grade = '72'
+where sid = '1000'
+
+--datas twice is same regardless of delete operation;
+
+--4.1
+set transaction isolation level serializable
+begin tran
+	select *
+	from students
+	where sid = '1001'
+	
+	if @@rowcount <> 0
+		begin
+			waitfor delay '00:00:10'
+			select *
+			from students
+			where sid = '1001'
+		end
+commit tran
+--4.2
+set transaction isolation level serializable
+insert into students
+values('1001', 'tommy', NULL, NULL);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

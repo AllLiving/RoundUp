@@ -1,0 +1,88 @@
+网络功能一人：
+
+包括利用api获取百度榜单
+	从而实现“发现”或者“在线音乐”界面，
+
+以及歌曲的播放和下载。
+
+编程要求：
+界面布局美观 + Java格式标准
+ + 类名函数以及变量名做到简短有意义
+ + 灵活利用Java面向对象的思想 把东西对象化 这样会方便很多
+
+网易的那种比较好实现 直接像期中项目那样就可以 右上角跳转音乐界面
+
+**注意把播放的界面留给我 我要加东西
+
+
+
+1. build gradle有一些问题，新的gradle无法下载，
+
+
+2. 获取榜单内容
+http://tingapi.ting.baidu.com/v1/restserver/ting
+?method=baidu.ting.billboard.billList
+&type=1&size=10&offset=0
+搜索
+http://tingapi.ting.baidu.com/v1/restserver/ting
+?method=baidu.ting.search.catalogSug
+&query=%E7%A9%BA%E5%9F%8E%E8%AE%A1
+播放
+http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.song.playAAC&songid=877578
+歌词
+
+3. component:
+sidebar;
+
+
+1. 进入fragment就闪退：
+V	甚至没有进入Fragment的OnCreateView初始化函数；
+这说明，问题出现在MainActivity中。
+因为Fragment的调用函数与例子无异，
+因而问题可能会出现在布局文件中，
+布局文件中缺少对于Fragment布局的引用。
+
+2. 运行完初始化程序之后闪退
+存在之前的初始化值未被赋值，始终为null，
+可以通过debug查找出来；
+
+3. 无法通过GET获取歌曲信息
+V	使用query之后系统提示Http403Forbidden
+使用的请求没有header，服务器理解请求的内容，但是不予响应；
+V	Expected BEGIN-Object but was BEGIN-ARRAY；
+返回信息的格式与之前获取的来自于GitHub的格式不同，
+返回值有[]的外边，导致信息不能正确读取；
+V	使用百度音乐会导致服务器的403
+使用网易云音乐接口API
+V	网易云根据曲名进行搜索
+http://s.music.163.com/api/search/get?type=1&s=vibe&limit=10&offset=0
+
+
+
+
+2. 对话框没有点击效果
+忘记调用函数
+
+
+
+3. 跳转到主界面会闪退
+
+重置主界面布局
+——直接跳转到MainActivity中，调用其onCreate函数；
+
+MainActivity中存在字符串参数，用于记录跳转信息；
+此时从另一个界面跳转去的数据是null；
+会导致崩溃，需要设置检查函数，保证str不会被赋值为null；
+
+3. activity栈的堆积
+设置flag清空栈；
+
+4. 缺失页面实现
+缺失页面通忘了处理意见反馈界面；
+
+
+
+
+
+
+

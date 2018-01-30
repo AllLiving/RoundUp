@@ -1,0 +1,7 @@
+bin/hadoop jar InverseIndex.jar InverseIndex /input /output
+
+bin/hdfs dfs -cat /output/*
+
+ bin/hadoop jar myapriori.jar myapriori.AprioriMapReduce <hdfs/inputfile/这里是源数据文件，格式见下文示例> <hdfs/output/暂存的输出文件路径> <hdfs/savefile/保存频繁项的文件路径> <min support num/最小支持数量> true <-这个true必不可少 
+
+bin/hadoop jar Apriori.jar AprioriMapReduce /input/aprtest.txt /output/outputtmp.txt /savefile 2 true

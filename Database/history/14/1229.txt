@@ -1,0 +1,66 @@
+
+
+
+
+
+--1
+set transaction isolation level repeatable read
+
+begin tran 
+update courses
+set hour=80
+where cid='10001'
+-- Now we get a x lock
+set transaction isolation level repeatable read
+set lock_timeout 2000
+begin tran
+	select *
+	from courses
+	where cid = '10001'
+commit tran
+
+exec sp_who
+
+--2
+set transaction isolation level repeatable read
+
+begin tran
+	select *
+	from teachers
+	where tid = '200003125'
+	waitfor delay '00:00:05'
+	update teachers
+	set salary = 4000
+	where tid = '20003125'
+commit tran
+	select *
+	from teachers
+	where tid = '20003125'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

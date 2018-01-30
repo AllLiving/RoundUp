@@ -1,0 +1,3 @@
+alter table products add city char(10)
+alter table products add quantity int 
+alter table products add price int

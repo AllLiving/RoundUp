@@ -1,0 +1,5 @@
+id1	a,ab,abc
+id2	ac,bc 
+id3	a,ab,cc
+id4	bu,bn
+id5	nm,nn

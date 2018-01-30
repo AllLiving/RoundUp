@@ -1,0 +1,253 @@
+--1
+create table CARD(
+	cid char(10) unique, -- unique 表唯一约束 
+	sid char(10),
+	money decimal(10, 2),
+	--设置主键 
+	primary key(cid)
+	foreign key(sid) references students
+)
+
+--2
+alter table CARD add bank char(20)
+
+--3
+alter table CARD
+drop column bank;
+
+--4
+
+select tname
+	from Teachers
+	where salary >=
+		all(
+			select salary
+			from Teachers
+			where salary is not null
+		)
+
+select cname
+from courses
+where cid = 
+	any(
+		select cid
+		from choices,
+		where tid = 
+			any(
+				select tid
+				from Teachers
+				where salary >=
+					all(
+						select salary
+						from Teachers
+						where salary is not null
+					)
+			)
+	)
+--5
+
+select cname
+from courses
+where hour = 
+	any(
+		select hour
+		from courses
+		where cname = 'uml' or cname = 'c++'
+	)
+	and cname <> 'uml'
+	and cname <> 'c++'
+
+--6
+
+select sid
+from choices
+where cid = 
+	(
+		select cid
+		from courses
+		where cname = 'c++'
+	)
+except
+select sid
+from choices
+where cid = 
+	(
+		select cid
+		from courses
+		where cname = 'database'
+	)
+
+--7
+select sid
+from choices
+where cid = 
+	(
+		select cid
+		from courses
+		where cname = 'database'
+	)
+	and 
+	score >
+	(
+		select score
+		from choices
+		where sid = 
+		(
+			select sid
+			from students
+			where sname = 'ruvldjlm'
+		)
+		and
+		cid = 
+		(
+			select cid
+			from courses
+			where cname = 'database'
+		)
+	)
+
+--8
+select avg(score) as avg, max(score) as max
+from choices
+where cid = 
+	(
+		select cid
+		from courses
+		where cname = 'database'
+	)
+
+--9
+select sname
+from students
+where sid = 
+	any(
+		select sid
+		from choices
+		where
+			cid = 
+			(
+				select cid
+				from courses
+				where cname = 'database'
+			)
+			and
+			score >= 
+			all(
+				select score
+				from choices
+				where score is not null
+			)
+	)
+
+--10
+select sname
+from students
+where sid = 
+	any(
+		select sid
+		from students
+		except
+		select sid
+		from choices
+		where cid = 
+		(
+			select cid
+			from courses
+			where cname = 'database'
+		)
+	)
+
+--11
+select sname
+from students as s
+where sid = 
+
+select cid
+from choices as c
+where s.sid = c.sid
+
+--12
+create view view_sc
+		(sname, cname, score) 
+as 
+select sts.sname, crs.cname, cis.score
+from CHOICES as cis, students as sts, courses as crs
+where sts.sid = cis.sid, crs.cid = cis.cid
+
+--13
+select sname
+from view_sc
+where score > 90
+
+--14
+cannot, related table;
+
+--15
+create rule R1
+as @value > 0
+go 
+exec sp_bindrule R1, 'CARD.[money]'
+
+--16
+alter table CARD
+insert value(10037, 823069829, -2)
+
+--17
+exec sp_unbindrule 'CARD.[money]' 
+drop rule R1
+
+--18
+create trigger T1
+on students
+for delete 
+	as
+		if(
+			(select cid
+			from deleted) = '800015960'
+		)
+			begin
+				print 'No delete' 
+				Rollback transaction
+			End
+
+--19
+delete 
+from students
+where sid = '800015960'
+
+--20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

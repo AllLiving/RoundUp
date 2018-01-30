@@ -1,0 +1,108 @@
+use School
+
+--1
+--select students.sid, score
+--from CHOICES, STUDENTS, COURSES
+--where STUDENTS.sid = CHOICES.sid
+--and COURSES.cid = CHOICES.cid
+--and cname = 'c++'
+--and score > 
+--	(select score
+--	from CHOICES, STUDENTS, COURSES
+--	where STUDENTS.sid = CHOICES.sid
+--	and COURSES.cid = CHOICES.cid
+--	and sname = 'znkoo'
+--	and cname = 'c++')
+--order by score desc
+
+--2
+--select  sname, grade
+--from STUDENTS
+--where grade = (
+--		select grade
+--		from STUDENTS
+--		where sid = '883794999')
+--union
+--select sname, grade
+--from STUDENTS
+--where grade = (
+--		select grade
+--		from STUDENTS
+--		where sid = '850955252')
+
+--3
+--select sid
+--from STUDENTS
+--where sid not in(
+--		select sid
+--		from CHOICES, COURSES
+--		where CHOICES.cid = COURSES.cid
+--		and COURSES.cname = 'java')
+
+--4
+--select *
+--from COURSES
+--where COURSES.hour <=
+--	all(select hour
+--	from COURSES
+--	where hour is not null)
+
+--5
+--select TEACHERS.tid, cid
+--from TEACHERS, CHOICES
+--where TEACHERS.tid = CHOICES.tid
+--and salary >= all(
+--	select salary
+--	from TEACHERS
+--	where salary is not null)
+
+--6
+--select sid, score
+--from CHOICES, COURSES
+--where CHOICES.cid = COURSES.cid
+--and COURSES.cname = 'erp'
+--and score >= all
+--	(select score
+--	from CHOICES
+--	where score is not null)
+
+--7
+--select cname
+--from COURSES
+--where cid not in
+--	(select cid
+--	from CHOICES)
+
+--8
+--select cname
+--from COURSES, CHOICES
+--where CHOICES.cid = COURSES.cid
+--and CHOICES.tid = 
+--	ANY(select tid
+--	from CHOICES
+--	where cid =
+--		(select cid 
+--		from COURSES
+--		where cname = 'uml'))
+
+--9
+--select sid
+--from CHOICES, COURSES
+--where cname = 'database'
+--and CHOICES.cid = COURSES.cid
+--intersect
+--select sid
+--from CHOICES, COURSES
+--where cname = 'uml'
+--and CHOICES.cid = COURSES.cid
+
+--10
+--select sid
+--from CHOICES, COURSES
+--where cname = 'database'
+--and CHOICES.cid = COURSES.cid
+--except
+--select sid
+--from CHOICES, COURSES
+--where cname = 'uml'
+--and CHOICES.cid = COURSES.cid
