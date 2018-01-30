@@ -1,0 +1,22 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+E:\Dropbox\ArmBook\LaunchPad\LaunchPadware\PeriodicTimer0AInts_4F120\PeriodicTimer0AInts.uvproj
+Project File Date:  10/20/2013
+
+<h2>Output:</h2>
+Build target 'PeriodicTimer0AInts'
+compiling PeriodicTimer0AInts.c...
+compiling Timer0A.c...
+linking...
+.\PeriodicTimer0AInts.axf: Error: L6218E: Undefined symbol Timer0A_Init (referred from periodictimer0aints.o).
+".\PeriodicTimer0AInts.axf" - 1 Errors, 0 Warning(s).
+Target not created
+Build target 'PeriodicTimer0AInts'
+compiling PeriodicTimer0AInts.c...
+compiling Timer0A.c...
+linking...
+Program Size: Code=1416 RO-data=64 RW-data=8 ZI-data=1120  
+".\PeriodicTimer0AInts.axf" - 0 Errors, 0 Warning(s).
